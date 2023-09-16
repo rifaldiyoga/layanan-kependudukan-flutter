@@ -1,0 +1,67 @@
+import 'dart:convert';
+
+import 'package:get/get.dart';
+import 'package:layanan_kependudukan/data/repository/auth_repository.dart';
+import 'package:layanan_kependudukan/models/auth_response_model.dart';
+import 'package:layanan_kependudukan/models/response_model.dart';
+import 'package:layanan_kependudukan/models/signin_model.dart';
+import 'package:layanan_kependudukan/models/usermodel_model.dart';
+
+class AuthController extends GetxController implements GetxService {
+  final AuthRepository authRepository;
+
+  AuthController({required this.authRepository});
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  Future<ResponseModel> signUp(SignUpModel signUpModel) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepository.signUp(signUpModel);
+    late ResponseModel responseModel;
+
+    if (response.statusCode == 200) {
+      var user = AuthModel.fromJson(json.decode(response.bodyString!)).data!;
+      authRepository.saveUserToken(user.token!);
+      authRepository.saveUser(user.name!, user.nik!, user.email!);
+      responseModel = ResponseModel(true, "");
+    } else {
+      responseModel = ResponseModel(false, response.body["message"]!);
+    }
+
+    _isLoading = false;
+    update();
+
+    return responseModel;
+  }
+
+  Future<ResponseModel> signIn(SignInModel signInModel) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepository.signIn(signInModel);
+    late ResponseModel responseModel;
+
+    if (response.statusCode == 200) {
+      var user = AuthModel.fromJson(json.decode(response.bodyString!)).data!;
+      authRepository.saveUserToken(user.token!);
+      authRepository.saveUser(user.name!, user.nik!, signInModel.email);
+      responseModel = ResponseModel(true, user.token!);
+    } else {
+      responseModel = ResponseModel(false, response.body["message"]!);
+    }
+
+    _isLoading = false;
+    update();
+
+    return responseModel;
+  }
+
+  Future<String> getUserToken() async {
+    return await authRepository.getUserToken();
+  }
+
+  clearSharedPref() {
+    return authRepository.clearSharedPreferences();
+  }
+}
