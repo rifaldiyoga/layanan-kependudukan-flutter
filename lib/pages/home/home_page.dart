@@ -47,11 +47,11 @@ class HomePage extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Text(
-                    Get.find<UserController>().getUser(),
+                    Get.find<UserController>().getUser().name ?? "",
                     style: primaryTextStyle.copyWith(
                         fontSize: 18, fontWeight: bold),
                   ),
@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Pelayanan publik\nAman & Cepat",
+                "Pelayanan Publik\nAman & Cepat",
                 style: primaryTextStyle.copyWith(
                     fontWeight: bold, fontSize: 16, height: 1.5),
               ),
@@ -127,7 +127,8 @@ class HomePage extends StatelessWidget {
                             callback: () {
                               i == 0
                                   ? Get.toNamed(RouteHelper.getLayanan())
-                                  : Get.toNamed(RouteHelper.getLayanan());
+                                  : Get.toNamed(
+                                      RouteHelper.getPengajuan(layanan));
                             },
                           );
                         }).toList()),
@@ -168,7 +169,7 @@ class HomePage extends StatelessWidget {
                 ),
                 articleController.articleList.isNotEmpty
                     ? pengumumanList(articleController)
-                    : Text("Empty"),
+                    : const Text("Empty"),
               ]),
         );
       });

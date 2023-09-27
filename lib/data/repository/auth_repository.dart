@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:layanan_kependudukan/data/api/api_client.dart';
+import 'package:layanan_kependudukan/models/auth_response_model.dart';
 import 'package:layanan_kependudukan/models/signin_model.dart';
 import 'package:layanan_kependudukan/models/usermodel_model.dart';
 import 'package:layanan_kependudukan/utils/app_constants.dart';
@@ -29,10 +32,8 @@ class AuthRepository {
     return await sharedPreferences.setString(AppConstants.TOKEN, token);
   }
 
-  saveUser(String name, String nik, String email) async {
-    await sharedPreferences.setString(AppConstants.NAME, name);
-    await sharedPreferences.setString(AppConstants.NIK, nik);
-    await sharedPreferences.setString(AppConstants.EMAIL, email);
+  saveUser(UserModel userModel) async {
+    await sharedPreferences.setString(AppConstants.USER, jsonEncode(userModel));
   }
 
   Future<String> getUserToken() async {

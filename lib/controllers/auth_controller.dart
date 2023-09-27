@@ -24,7 +24,7 @@ class AuthController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       var user = AuthModel.fromJson(json.decode(response.bodyString!)).data!;
       authRepository.saveUserToken(user.token!);
-      authRepository.saveUser(user.name!, user.nik!, user.email!);
+      authRepository.saveUser(user);
       responseModel = ResponseModel(true, "");
     } else {
       responseModel = ResponseModel(false, response.body["message"]!);
@@ -45,7 +45,7 @@ class AuthController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       var user = AuthModel.fromJson(json.decode(response.bodyString!)).data!;
       authRepository.saveUserToken(user.token!);
-      authRepository.saveUser(user.name!, user.nik!, signInModel.email);
+      authRepository.saveUser(user);
       responseModel = ResponseModel(true, user.token!);
     } else {
       responseModel = ResponseModel(false, response.body["message"]!);

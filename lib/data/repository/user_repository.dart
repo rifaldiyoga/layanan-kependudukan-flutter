@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:layanan_kependudukan/data/api/api_client.dart';
+import 'package:layanan_kependudukan/models/auth_response_model.dart';
 import 'package:layanan_kependudukan/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,7 +11,8 @@ class UserRepository {
 
   UserRepository({required this.apiClient, required this.sharedPreferences});
 
-  String getUser() {
-    return sharedPreferences.getString(AppConstants.NAME) ?? "";
+  UserModel getUser() {
+    return UserModel.fromJson(
+        json.decode(sharedPreferences.getString(AppConstants.USER) ?? ""));
   }
 }

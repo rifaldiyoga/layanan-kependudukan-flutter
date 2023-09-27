@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:layanan_kependudukan/models/layanan_response_model.dart';
 
+import '../routes/route_helper.dart';
 import '../theme.dart';
 import 'layanan_item.dart';
 
@@ -39,6 +41,8 @@ class LayananSection extends StatelessWidget {
                       child: LayananItem(
                           index: x,
                           title: typeModel.data[x].name,
+                          callback: () => Get.toNamed(
+                              RouteHelper.getPengajuan(typeModel.data[x])),
                           icon: "assets/icon_email.png"),
                     ),
                   ],

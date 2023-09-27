@@ -35,8 +35,17 @@ class UserModel {
   String? email;
   String? nik;
   String? token;
+  String? role;
+  String? avatarPath;
 
-  UserModel({this.id, this.name, this.email, this.nik, this.token});
+  UserModel(
+      {this.id,
+      this.name,
+      this.email,
+      this.nik,
+      this.token,
+      this.role,
+      this.avatarPath});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -44,6 +53,8 @@ class UserModel {
     email = json['email'];
     nik = json['nik'];
     token = json['token'];
+    role = json['role'];
+    avatarPath = json['avatar_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +64,8 @@ class UserModel {
     data['email'] = email;
     data['nik'] = nik;
     data['token'] = token;
+    data['role'] = role;
+    data['avatar_path'] = avatarPath;
     return data;
   }
 }

@@ -22,7 +22,7 @@ const lightGreenColor = Color(0xffebffd0);
 const greenColor = Color(0xffb2f156);
 
 const lightYellowColor = Color(0xfffeebb7);
-const yellowColor = Color(0xfff8d77a);
+const yellowColor = Color(0xffe3ad37);
 
 const alertColor = Color(0xffffe8ee);
 const priceTextColor = Color(0xff2C96F1);
