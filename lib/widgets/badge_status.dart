@@ -16,8 +16,12 @@ class BadgeStatus extends StatelessWidget {
           text: "Pending",
           bgColor: lightYellowColor,
           textStyle: primaryTextStyle.copyWith(color: yellowColor));
+    } else if (status == AppConstants.APPROVED_RT) {
+      style = Style(
+          text: "Disetuji RT",
+          bgColor: secondaryColor,
+          textStyle: primaryTextStyle.copyWith(color: yellowColor));
     }
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),

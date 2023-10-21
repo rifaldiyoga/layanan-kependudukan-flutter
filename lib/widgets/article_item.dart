@@ -44,6 +44,9 @@ class ArticleWidget extends StatelessWidget {
                     ],
                   )),
                   SizedBox(
+                    width: 16,
+                  ),
+                  SizedBox(
                       child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(

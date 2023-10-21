@@ -16,4 +16,10 @@ class PengajuanRepository {
     return await apiClient.postData(
         AppConstants.PENGAJUAN_URL, signInModel.toJson());
   }
+
+  Future<Response> postStatusPengajuanSurat(PengajuanModel signInModel) async {
+    return await apiClient.postData(
+        AppConstants.PENGAJUAN_URL + "/" + signInModel.id.toString(),
+        signInModel.toJson());
+  }
 }

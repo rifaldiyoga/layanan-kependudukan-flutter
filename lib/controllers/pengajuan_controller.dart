@@ -41,4 +41,23 @@ class PengajuanController extends GetxController {
 
     return responseModel;
   }
+
+  Future<ResponseModel> postUpdatePengajuan(PengajuanModel signInModel) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await pengajuanRepository.postStatusPengajuanSurat(signInModel);
+    late ResponseModel responseModel;
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel(true, "Success");
+    } else {
+      responseModel = ResponseModel(false, response.bodyString ?? "");
+    }
+
+    _isLoading = false;
+    update();
+
+    return responseModel;
+  }
 }
