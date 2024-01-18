@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:layanan_kependudukan/base/show_message.dart';
 import 'package:layanan_kependudukan/controllers/auth_controller.dart';
+import 'package:layanan_kependudukan/helpers/loading_helper.dart';
 import 'package:layanan_kependudukan/models/usermodel_model.dart';
 import 'package:layanan_kependudukan/routes/route_helper.dart';
+import 'package:layanan_kependudukan/services/message_service.dart';
 import 'package:layanan_kependudukan/theme.dart';
 import 'package:layanan_kependudukan/widgets//button.dart';
 import 'package:layanan_kependudukan/widgets//text_field.dart';
@@ -44,10 +46,16 @@ class SignUpPage extends StatelessWidget {
         msg = "NIK tidak boleh kosong!";
       }
       if (msg.isEmpty) {
+        Get.find<LoadingHelper>().showLoadingHelper(context);
         authController
             .signUp(SignUpModel(
-                nik: nik, name: name, email: email, password: password))
+                nik: nik,
+                name: name,
+                email: email,
+                password: password,
+                token: MessagingService.fcmToken ?? ""))
             .then((status) {
+          Get.find<LoadingHelper>().dismissLoading();
           if (status.isSuccess) {
             Get.offNamed(RouteHelper.getHome(), preventDuplicates: true);
           } else {
@@ -86,7 +94,7 @@ class SignUpPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Nomor Induk Penduduk",
+          titleText: "Nomor Induk Penduduk",
           icon: "assets/icon_email.png",
           controller: nikController,
         ),
@@ -97,7 +105,7 @@ class SignUpPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Nama Lengkap",
+          titleText: "Nama Lengkap",
           icon: "assets/icon_email.png",
           controller: namaController,
         ),
@@ -108,7 +116,7 @@ class SignUpPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Email",
+          titleText: "Email",
           icon: "assets/icon_email.png",
           controller: emailController,
         ),
@@ -119,7 +127,7 @@ class SignUpPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Password",
+          titleText: "Password",
           icon: "assets/icon_password.png",
           obscureText: true,
           controller: passwordController,

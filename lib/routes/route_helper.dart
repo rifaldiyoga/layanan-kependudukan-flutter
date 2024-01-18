@@ -10,9 +10,11 @@ import 'package:layanan_kependudukan/pages/auth/sign_up_page.dart';
 import 'package:layanan_kependudukan/pages/detail_pengajuan_page.dart';
 import 'package:layanan_kependudukan/pages/home/main_page.dart';
 import 'package:layanan_kependudukan/pages/layanan_list_page.dart';
-import 'package:layanan_kependudukan/pages/pengajuan_page.dart';
+import 'package:layanan_kependudukan/pages/pengajuan/pengajuan_page.dart';
 import 'package:layanan_kependudukan/pages/splashsceen_page.dart';
 import 'package:layanan_kependudukan/pages/tanda_tangan_page.dart';
+
+import '../pages/riwayat_status_page.dart';
 
 class RouteHelper {
   static const String _splashScreen = "/splash";
@@ -22,6 +24,7 @@ class RouteHelper {
   static const String _article = "/article";
   static const String _layanan = "/layanan";
   static const String _detail_pengajuan = "/detail-pengajuan";
+  static const String _riwayat_status = "/riwayat-status";
   static const String _pengajuan = "/pengajuan";
   static const String _tanda_tangan = "/tanda-tangan";
 
@@ -32,6 +35,8 @@ class RouteHelper {
   static String getLayanan() => _layanan;
   static String getDetailPengajuan(PengajuanModel pengajuanModel) =>
       "$_detail_pengajuan?pengajuan=${json.encode(pengajuanModel.toJson())}";
+  static String getRiwayatStatus(PengajuanModel pengajuanModel) =>
+      "$_riwayat_status?pengajuan=${json.encode(pengajuanModel.toJson())}";
   static String getArticle(ArticleModel articleModel) =>
       "$_article?article=${json.encode(articleModel.toJson())}";
   static String getPengajuan(LayananModel layananModel) =>
@@ -60,6 +65,15 @@ class RouteHelper {
           var param = Get.parameters["pengajuan"]!;
           var pengajuan = PengajuanModel.fromJson(json.decode(param));
           return DetailPengajuanPage(
+            pengajuanModel: pengajuan,
+          );
+        }),
+    GetPage(
+        name: _riwayat_status,
+        page: () {
+          var param = Get.parameters["pengajuan"]!;
+          var pengajuan = PengajuanModel.fromJson(json.decode(param));
+          return RiwayatStatusPage(
             pengajuanModel: pengajuan,
           );
         }),

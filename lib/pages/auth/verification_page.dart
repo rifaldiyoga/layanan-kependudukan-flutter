@@ -36,7 +36,7 @@ class VerificationPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Kode Verifikasi",
+          titleText: "Kode Verifikasi",
           icon: "assets/icon_password.png",
           controller: codeController,
         ),

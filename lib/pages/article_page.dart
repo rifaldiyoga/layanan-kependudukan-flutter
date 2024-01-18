@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image/flutter_image.dart';
 import 'package:layanan_kependudukan/helpers/date_formaters.dart';
 import 'package:layanan_kependudukan/models/article_response_model.dart';
 import 'package:layanan_kependudukan/theme.dart';
+
+import '../utils/app_constants.dart';
 
 class ArticlePage extends StatelessWidget {
   final ArticleModel articleModel;
@@ -13,11 +16,19 @@ class ArticlePage extends StatelessWidget {
       return Container(
         child: Stack(
           children: [
-            Image.asset(
-              'assets/images/image_profile.jpg', // Replace with your asset path
+            Image(
+              image: NetworkImageWithRetry(
+                "${AppConstants.BASE_URL}/${articleModel.imageUrl ?? ""}",
+              ), // Replace with your asset path
               width: double.infinity, // Set the width of the circular image
               height: 300, // Set the height of the circular image
               fit: BoxFit.cover, // You can adjust the BoxFit as needed
+              errorBuilder: (context, exception, stackTrack) => Image.asset(
+                'assets/images/image_profile.jpg',
+                width: double.infinity, // Set the width of the circular image
+                height: 300, // Set the height of the circular image
+                fit: BoxFit.cover,
+              ),
             ),
             InkWell(
               onTap: () => Navigator.pop(context),
@@ -79,6 +90,7 @@ class ArticlePage extends StatelessWidget {
             Text(
               articleModel.content,
               textAlign: TextAlign.justify,
+              style: primaryTextStyle.copyWith(height: 1.5),
             )
           ],
         ),

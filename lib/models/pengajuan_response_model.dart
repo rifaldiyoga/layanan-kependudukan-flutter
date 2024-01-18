@@ -1,4 +1,5 @@
 import 'package:layanan_kependudukan/helpers/date_formaters.dart';
+import 'package:layanan_kependudukan/models/penduduk_model.dart';
 
 class PengajuanResponseModel {
   String? message;
@@ -51,10 +52,10 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['limit'] = this.limit;
-    data['page'] = this.page;
-    data['total_datas'] = this.totalDatas;
-    data['total_pages'] = this.totalPages;
+    data['limit'] = limit;
+    data['page'] = page;
+    data['total_datas'] = totalDatas;
+    data['total_pages'] = totalPages;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -70,9 +71,12 @@ class PengajuanModel {
   int? layananId;
   String? status;
   String? keterangan;
+  String? note;
+  int? refId;
   int? createdBy;
   DateTime? createdAt;
   List<DetailPengajuanModel>? detail;
+  PendudukModel? penduduk;
 
   PengajuanModel(
       {this.id,
@@ -81,18 +85,23 @@ class PengajuanModel {
       this.layanan,
       this.layananId,
       this.status,
+      this.refId,
+      this.note,
       this.keterangan,
       this.createdBy,
       this.createdAt,
-      this.detail});
+      this.detail,
+      this.penduduk});
 
   PengajuanModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['code'];
     name = json['name'];
     layanan = json['layanan'];
+    note = json['note'];
     layananId = json['layanan_id'];
     status = json['status'];
+    refId = json['ref_id'];
     keterangan = json['keterangan'];
     createdBy = json['created_by'];
     createdAt = DateFormater.stringToDateTime(
@@ -103,6 +112,9 @@ class PengajuanModel {
         detail!.add(DetailPengajuanModel.fromJson(v));
       });
     }
+    penduduk = json['penduduk'] != null
+        ? PendudukModel.fromJson(json['penduduk'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -111,14 +123,19 @@ class PengajuanModel {
     data['code'] = code;
     data['name'] = name;
     data['layanan'] = layanan;
+    data['note'] = note;
     data['layanan_id'] = layananId;
     data['status'] = status;
+    data['ref_id'] = refId;
     data['keterangan'] = keterangan;
     data['created_by'] = createdBy;
     data['created_at'] = DateFormater.dateTimeToString(
         createdAt ?? DateTime.now(), DateFormater.DATE_TIME_FORMAT);
     if (detail != null) {
       data['detail'] = detail!.map((v) => v.toJson()).toList();
+    }
+    if (penduduk != null) {
+      data['penduduk'] = penduduk!.toJson();
     }
     return data;
   }
@@ -129,14 +146,16 @@ class DetailPengajuanModel {
   int? pengajuanId;
   String? status;
   String? name;
+  String? note;
   int? createdBy;
-  String? createdAt;
+  DateTime? createdAt;
 
   DetailPengajuanModel(
       {this.id,
       this.pengajuanId,
       this.status,
       this.name,
+      this.note,
       this.createdBy,
       this.createdAt});
 
@@ -145,8 +164,10 @@ class DetailPengajuanModel {
     pengajuanId = json['pengajuan_id'];
     status = json['status'];
     name = json['name'];
+    note = json['note'];
     createdBy = json['created_by'];
-    createdAt = json['created_at'];
+    createdAt = DateFormater.stringToDateTime(
+        json['created_at'], DateFormater.DATE_TIME_FORMAT);
   }
 
   Map<String, dynamic> toJson() {
@@ -155,8 +176,10 @@ class DetailPengajuanModel {
     data['pengajuan_id'] = pengajuanId;
     data['status'] = status;
     data['name'] = name;
+    data['note'] = note;
     data['created_by'] = createdBy;
-    data['created_at'] = createdAt;
+    data['created_at'] = DateFormater.dateTimeToString(
+        createdAt ?? DateTime.now(), DateFormater.DATE_TIME_FORMAT);
     return data;
   }
 }

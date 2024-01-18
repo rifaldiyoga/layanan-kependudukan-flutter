@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133524587104",
+    "project_id": "layanan-kependudukan",
+    "storage_bucket": "layanan-kependudukan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133524587104:android:b7b1c28c8fb6fed132b905",
+        "android_client_info": {
+          "package_name": "com.example.layanan_kependudukan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDae6IKhGlLqliKjremKZCsy34b1UeSJrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

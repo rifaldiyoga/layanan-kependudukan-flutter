@@ -11,12 +11,12 @@ class ArticleController extends GetxController {
   List<dynamic> get articleList => _articleList;
 
   Future<void> getLatestArticle() async {
-    Response response = await articleRepository.getLatestArticle();
-    print(response.bodyString);
+    final response = await articleRepository.getLatestArticle();
+    print(response.data);
     if (response.statusCode == 200) {
       _articleList = [];
       _articleList
-          .addAll(ArticleReponseModel.fromJson(response.body).data.data!);
+          .addAll(ArticleReponseModel.fromJson(response.data).data.data!);
       update();
     }
   }

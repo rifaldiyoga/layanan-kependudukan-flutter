@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:layanan_kependudukan/data/repository/auth_repository.dart';
 import 'package:layanan_kependudukan/models/auth_response_model.dart';
@@ -18,16 +16,16 @@ class AuthController extends GetxController implements GetxService {
   Future<ResponseModel> signUp(SignUpModel signUpModel) async {
     _isLoading = true;
     update();
-    Response response = await authRepository.signUp(signUpModel);
+    final response = await authRepository.signUp(signUpModel);
     late ResponseModel responseModel;
 
     if (response.statusCode == 200) {
-      var user = AuthModel.fromJson(json.decode(response.bodyString!)).data!;
+      var user = AuthModel.fromJson(response.data!).data!;
       authRepository.saveUserToken(user.token!);
       authRepository.saveUser(user);
       responseModel = ResponseModel(true, "");
     } else {
-      responseModel = ResponseModel(false, response.body["message"]!);
+      responseModel = ResponseModel(false, response.data["message"]!);
     }
 
     _isLoading = false;
@@ -39,16 +37,37 @@ class AuthController extends GetxController implements GetxService {
   Future<ResponseModel> signIn(SignInModel signInModel) async {
     _isLoading = true;
     update();
-    Response response = await authRepository.signIn(signInModel);
+    final response = await authRepository.signIn(signInModel);
     late ResponseModel responseModel;
 
     if (response.statusCode == 200) {
-      var user = AuthModel.fromJson(json.decode(response.bodyString!)).data!;
+      var user = AuthModel.fromJson(response.data).data!;
       authRepository.saveUserToken(user.token!);
       authRepository.saveUser(user);
       responseModel = ResponseModel(true, user.token!);
     } else {
-      responseModel = ResponseModel(false, response.body["message"]!);
+      responseModel = ResponseModel(false, response.data["message"]!);
+    }
+
+    _isLoading = false;
+    update();
+
+    return responseModel;
+  }
+
+  Future<ResponseModel> signOut() async {
+    _isLoading = true;
+    update();
+    final response = await authRepository.signOut();
+    late ResponseModel responseModel;
+
+    if (response.statusCode == 200) {
+      var user = AuthModel.fromJson(response.data).data!;
+      authRepository.saveUserToken(user.token!);
+      authRepository.saveUser(user);
+      responseModel = ResponseModel(true, user.token!);
+    } else {
+      responseModel = ResponseModel(false, response.data["message"]!);
     }
 
     _isLoading = false;

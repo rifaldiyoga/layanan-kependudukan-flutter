@@ -13,14 +13,40 @@ class BadgeStatus extends StatelessWidget {
         text: status, bgColor: secondaryColor, textStyle: primaryTextStyle);
     if (status == AppConstants.PENDING) {
       style = Style(
-          text: "Pending",
+          text: "Menunggu RT",
           bgColor: lightYellowColor,
           textStyle: primaryTextStyle.copyWith(color: yellowColor));
     } else if (status == AppConstants.APPROVED_RT) {
       style = Style(
-          text: "Disetuji RT",
+          text: "Menunggu RW",
           bgColor: secondaryColor,
-          textStyle: primaryTextStyle.copyWith(color: yellowColor));
+          textStyle: primaryTextStyle.copyWith(color: primaryColor));
+    } else if (status == AppConstants.APPROVED_RW ||
+        status == AppConstants.PENDING_ADMIN) {
+      style = Style(
+          text: "Menunggu Kelurahan",
+          bgColor: secondaryColor,
+          textStyle: primaryTextStyle.copyWith(color: primaryColor));
+    } else if (status == AppConstants.REJECTED_RT) {
+      style = Style(
+          text: "Ditolak RT",
+          bgColor: lightRedColor,
+          textStyle: primaryTextStyle.copyWith(color: redColor));
+    } else if (status == AppConstants.REJECTED_RW) {
+      style = Style(
+          text: "Ditolak RW",
+          bgColor: lightRedColor,
+          textStyle: primaryTextStyle.copyWith(color: redColor));
+    } else if (status == AppConstants.VALID) {
+      style = Style(
+          text: "Disetujui",
+          bgColor: lightGreenColor,
+          textStyle: primaryTextStyle.copyWith(color: greenColor));
+    } else if (status == AppConstants.REJECTED) {
+      style = Style(
+          text: "Ditolak Kelurahan",
+          bgColor: lightRedColor,
+          textStyle: primaryTextStyle.copyWith(color: redColor));
     }
     return Container(
       decoration: BoxDecoration(

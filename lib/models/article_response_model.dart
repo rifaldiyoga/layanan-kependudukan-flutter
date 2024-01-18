@@ -86,7 +86,7 @@ class ArticleModel {
     title = json['title'];
     author = json['author'];
     content = json['content'];
-    imageUrl = json['image_url'];
+    imageUrl = json['image_path'];
     tag = json['tag'];
     createdAt = DateFormater.stringToDateTime(
         json['created_at'], DateFormater.DATE_TIME_FORMAT);
@@ -98,7 +98,7 @@ class ArticleModel {
     data['title'] = title;
     data['author'] = author;
     data['content'] = content;
-    data['image_url'] = imageUrl;
+    data['image_path'] = imageUrl;
     data['tag'] = tag;
     data['created_at'] =
         DateFormater.dateTimeToString(createdAt, DateFormater.DATE_TIME_FORMAT);

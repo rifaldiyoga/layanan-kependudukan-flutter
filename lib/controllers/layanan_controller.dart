@@ -17,24 +17,24 @@ class LayananController extends GetxController {
   List<dynamic> get layananRekomList => _layananRekomList;
 
   Future<void> getLayanan() async {
-    Response response = await layananRepository.getLayanan();
-    print(response.bodyString);
+    final response = await layananRepository.getLayanan();
+    print(response.data);
     if (response.statusCode == 200) {
       _layananList = [];
-      _layananList.addAll(LayananResponseModel.fromJson(response.body).data);
+      _layananList.addAll(LayananResponseModel.fromJson(response.data).data);
       update();
     }
   }
 
   Future<void> getRekomLayanan() async {
-    Response response = await layananRepository.getRekomLayanan();
-    print(response.bodyString);
+    final response = await layananRepository.getRekomLayanan();
+    print(response.data);
     if (response.statusCode == 200) {
       _layananRekomList = [];
       _layananRekomList.add(
           LayananModel(id: -1, code: "", name: "Lihat\nSemua\n", type: ""));
       _layananRekomList
-          .addAll(LayananRekomResponseModel.fromJson(response.body).data);
+          .addAll(LayananRekomResponseModel.fromJson(response.data).data);
       update();
     }
   }

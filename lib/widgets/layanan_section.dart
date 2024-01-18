@@ -39,11 +39,12 @@ class LayananSection extends StatelessWidget {
                     SizedBox(
                       height: 120,
                       child: LayananItem(
-                          index: x,
-                          title: typeModel.data[x].name,
-                          callback: () => Get.toNamed(
-                              RouteHelper.getPengajuan(typeModel.data[x])),
-                          icon: "assets/icon_email.png"),
+                        index: x,
+                        title: typeModel.data[x].name,
+                        callback: () => Get.toNamed(
+                            RouteHelper.getPengajuan(typeModel.data[x])),
+                        code: typeModel.data[x].code,
+                      ),
                     ),
                   ],
                 ]),

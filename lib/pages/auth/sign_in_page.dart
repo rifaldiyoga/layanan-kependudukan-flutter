@@ -2,14 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:layanan_kependudukan/base/show_message.dart';
 import 'package:layanan_kependudukan/controllers/auth_controller.dart';
+import 'package:layanan_kependudukan/helpers/loading_helper.dart';
 import 'package:layanan_kependudukan/models/signin_model.dart';
 import 'package:layanan_kependudukan/routes/route_helper.dart';
 import 'package:layanan_kependudukan/theme.dart';
 import 'package:layanan_kependudukan/widgets//button.dart';
 import 'package:layanan_kependudukan/widgets//text_field.dart';
 
-class SignInPage extends StatelessWidget {
+import '../../services/message_service.dart';
+
+class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final _messagingService = MessagingService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _messagingService.init(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +60,10 @@ class SignInPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Email",
+          titleText: "Email",
           icon: "assets/icon_email.png",
           controller: emailController,
+          keyboardType: TextInputType.emailAddress,
         ),
       );
     }
@@ -54,7 +72,7 @@ class SignInPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(bottom: 16),
         child: CustomTextField(
-          hintText: "Password",
+          titleText: "Password",
           icon: "assets/icon_password.png",
           obscureText: true,
           controller: passwordController,
@@ -105,9 +123,14 @@ class SignInPage extends StatelessWidget {
                 msg = "Password tidak boleh kosong!";
               }
               if (msg.isEmpty) {
+                Get.find<LoadingHelper>().showLoadingHelper(context);
                 authController
-                    .signIn(SignInModel(email: email, password: password))
+                    .signIn(SignInModel(
+                        email: email,
+                        password: password,
+                        token: MessagingService.fcmToken ?? ""))
                     .then((status) {
+                  Get.find<LoadingHelper>().dismissLoading();
                   if (status.isSuccess) {
                     Get.offNamed(RouteHelper.getHome(),
                         preventDuplicates: true);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:layanan_kependudukan/base/show_message.dart';
 import 'package:layanan_kependudukan/controllers/auth_controller.dart';
 import 'package:layanan_kependudukan/routes/route_helper.dart';
 import 'package:layanan_kependudukan/widgets/setting_item.dart';
@@ -35,6 +36,17 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    onLogout(AuthController authController) {
+      authController.signOut().then((status) {
+        if (status.isSuccess) {
+          Get.find<AuthController>().clearSharedPref();
+          Get.offAllNamed(RouteHelper.getSignIn());
+        } else {
+          showMessage(status.message);
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -49,12 +61,10 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            section(),
             SettingItem(
               title: "Logout",
               callback: () {
-                Get.find<AuthController>().clearSharedPref();
-                Get.toNamed(RouteHelper.getSignIn());
+                onLogout(Get.find<AuthController>());
               },
             )
           ],

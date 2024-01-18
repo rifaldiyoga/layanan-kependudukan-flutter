@@ -15,7 +15,10 @@ class LayananListPage extends StatelessWidget {
       return Column(
         children: [
           for (var type in layananController.layananList)
-            LayananSection(typeModel: type)
+            LayananSection(typeModel: type),
+          SizedBox(
+            height: 24,
+          )
         ],
       );
     }
@@ -31,10 +34,13 @@ class LayananListPage extends StatelessWidget {
         shadowColor: Color.fromARGB(0, 255, 255, 255),
       ),
       body: GetBuilder<LayananController>(builder: (articleController) {
-        return SingleChildScrollView(
-            child: articleController.layananList.isNotEmpty
-                ? layananList(articleController)
-                : Text("Empty"));
+        return articleController.layananList.isNotEmpty
+            ? SingleChildScrollView(child: layananList(articleController))
+            : Center(
+                child: Container(
+                  child: CircularProgressIndicator(),
+                ),
+              );
       }),
     );
   }

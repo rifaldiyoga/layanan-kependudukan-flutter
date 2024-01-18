@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
 import 'package:layanan_kependudukan/data/api/api_client.dart';
 import 'package:layanan_kependudukan/models/auth_response_model.dart';
 import 'package:layanan_kependudukan/models/signin_model.dart';
@@ -15,20 +15,23 @@ class AuthRepository {
   AuthRepository({required this.apiClient, required this.sharedPreferences});
 
   Future<Response> signUp(SignUpModel signUpModel) async {
-    return await apiClient.postData(
-        AppConstants.REGISTER_URL, signUpModel.toJson());
+    return await apiClient.postData(AppConstants.REGISTER_URL,
+        data: signUpModel.toJson());
   }
 
   Future<Response> signIn(SignInModel signInModel) async {
-    return await apiClient.postData(
-        AppConstants.LOGIN_URL, signInModel.toJson());
+    return await apiClient.postData(AppConstants.LOGIN_URL,
+        data: signInModel.toJson());
+  }
+
+  Future<Response> signOut() async {
+    return await apiClient.postData(AppConstants.LOGOUT_URL);
   }
 
   saveUserToken(
     String token,
   ) async {
     apiClient.token = token;
-    apiClient.updateHeader(token);
     return await sharedPreferences.setString(AppConstants.TOKEN, token);
   }
 
@@ -38,13 +41,12 @@ class AuthRepository {
 
   Future<String> getUserToken() async {
     String token = sharedPreferences.getString(AppConstants.TOKEN) ?? "";
-    apiClient.updateHeader(token);
     return token;
   }
 
   bool clearSharedPreferences() {
     sharedPreferences.clear();
-    apiClient.updateHeader('');
+    apiClient.token = "";
     return true;
   }
 }

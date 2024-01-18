@@ -18,8 +18,8 @@ const orangeColor = Color(0xfff78d4e);
 const lightRedColor = Color(0xfffde6ee);
 const redColor = Color(0xffdd567f);
 
-const lightGreenColor = Color(0xffebffd0);
-const greenColor = Color(0xffb2f156);
+const lightGreenColor = Color(0xf9cdfa85);
+const greenColor = Colors.green;
 
 const lightYellowColor = Color(0xfffeebb7);
 const yellowColor = Color(0xffe3ad37);
@@ -47,7 +47,7 @@ const backgroundColor3 = Color(0xff242231);
 const backgroundColor4 = Color(0xff252836);
 
 const primaryTextColor = Color(0xff070707);
-const secondaryTextColor = Color(0xffa9a9a9);
+const secondaryTextColor = Color(0xff919191);
 
 TextStyle primaryTextStyle = GoogleFonts.inter(color: primaryTextColor);
 
